@@ -1,0 +1,33 @@
+name: Express Test
+on: [workflow_dispatch]
+jobs:
+  Start-App:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # # Runs a single command using the runners shell
+      # - name: Run a one-line script
+      #   run: echo Hello, world!
+      # # Runs a set of commands using the runners shell
+      # - name: Run a multi-line script
+      #   run: |
+      #     echo Add other actions to build,
+      #     echo test, and deploy your project.
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Run start
+        run: npm start
+  Zap-Scan:
+    runs-on: ubuntu-latest
+    name: Scan ZAP website
+    needs: Start-App
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@master
+        with:
+          target: 'http://localhost:3000/'
+          rules_file_name: '.github/workflows/rules.tsv'

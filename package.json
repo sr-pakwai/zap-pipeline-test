@@ -1,0 +1,28 @@
+{
+  "name": "zap-pipeline-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest app.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sr-pakwai/zap-pipeline-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sr-pakwai/zap-pipeline-test/issues"
+  },
+  "homepage": "https://github.com/sr-pakwai/zap-pipeline-test#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
+  }
+}

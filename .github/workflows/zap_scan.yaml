@@ -1,0 +1,26 @@
+name: Owasp Zap
+on: workflow_dispatch
+
+jobs:
+  test:
+    name: Owasp Zap Scans
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: Building Docker Image
+        run: docker-compose build
+      - name: Launching the app
+        run: docker-compose up --detach
+      - name: OWASP ZAP
+        uses: zaproxy/action-baseline@master
+        with:
+          # Target URL
+          target: "http://localhost:4000"
+          # docker_name: 'owasp/zap2docker-stable'
+          fail_action: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue_title: Security Tests
+          rules_file_name: '.github/workflows/rules.tsv'
+          cmd_options: '-a'
