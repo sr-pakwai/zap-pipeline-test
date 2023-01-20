@@ -5,16 +5,15 @@ jobs:
   example_matrix:
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        endpoint:
-          - 'https://www.zaproxy.org'
-          - 'https://www.google.com'
+        urlTitle:
+          - Zaproxy
+          - Google
         include:
           - urlTitle: Zaproxy
             endpoint: 'https://www.zaproxy.org'
           - urlTitle: Google
             endpoint: 'https://www.google.com'
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
         uses: zaproxy/action-baseline@master
