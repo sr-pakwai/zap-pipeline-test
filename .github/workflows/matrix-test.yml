@@ -5,10 +5,10 @@ jobs:
   example_matrix:
     strategy:
       matrix:
+        os: [ubuntu-latest]
         urlTitle:
           - Zaproxy
           - Google
-        os: [ubuntu-latest]
         include:
           - urlTitle: ZapProxy
             endpoint: 'https://www.zaproxy.org'
@@ -24,7 +24,6 @@ jobs:
           allow_issue_writing: false
           # https://www.zaproxy.org/docs/docker/baseline-scan/
           cmd_options: ''
-          # https://www.zaproxy.org/docs/desktop/start/features/authentication/
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
