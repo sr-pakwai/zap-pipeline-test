@@ -1,8 +1,8 @@
-name: Matrix Strategy Sample
+name: Centralize Zap Scan
 on: push
 # The trigger to which the workflow will run 
 jobs:
-  example_matrix:
+  Zap_scan:
     strategy:
       matrix:
         urlTitle:
@@ -17,6 +17,7 @@ jobs:
     steps:
       - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
         uses: zaproxy/action-baseline@master
+        # https://www.zaproxy.org/docs/desktop/start/features/authentication/
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: ${{ matrix.endpoint }}
@@ -26,5 +27,5 @@ jobs:
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
-          name: report-${{ matrix.urlTitle }}
+          name: zap_${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
