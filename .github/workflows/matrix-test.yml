@@ -5,18 +5,18 @@ jobs:
   example_matrix:
     strategy:
       matrix:
-        endpoint:
-          - 'https://www.zaproxy.org'
-          - 'https://www.google.com'
+        urlTitle:
+          - Zaproxy
+          - Google
         include:
-          - endpoint: 'https://www.zaproxy.org'
-            name: zaproxy.org
-          - endpoint: 'https://www.google.com'
-            name: google
+          - urlTitle: ZapProxy
+            endpoint: 'https://www.zaproxy.org'
+          - urlTitle: Google
+            endpoint: 'https://www.google.com'
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: ZAP Baseline Scan - (${{ matrix.name }})
+      - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
         uses: zaproxy/action-baseline@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -27,5 +27,5 @@ jobs:
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
-          name: pentest-report-${{ matrix.name }}
+          name: report-${{ matrix.rootUrl }}
           path: ${{ github.workspace }}
