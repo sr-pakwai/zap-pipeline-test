@@ -8,12 +8,12 @@ jobs:
         urlTitle:
           - Zaproxy
           - Google
+        os: [ubuntu-latest]
         include:
           - urlTitle: ZapProxy
             endpoint: 'https://www.zaproxy.org'
           - urlTitle: Google
             endpoint: 'https://www.google.com'
-        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
