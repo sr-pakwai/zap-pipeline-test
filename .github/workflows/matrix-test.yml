@@ -6,11 +6,11 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        urlTitle:
-          - Zaproxy
-          - Google
+        endpoint:
+          - 'https://www.zaproxy.org'
+          - 'https://www.google.com'
         include:
-          - urlTitle: ZapProxy
+          - urlTitle: Zaproxy
             endpoint: 'https://www.zaproxy.org'
           - urlTitle: Google
             endpoint: 'https://www.google.com'
