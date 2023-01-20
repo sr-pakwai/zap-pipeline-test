@@ -24,8 +24,9 @@ jobs:
           allow_issue_writing: false
           # https://www.zaproxy.org/docs/docker/baseline-scan/
           cmd_options: ''
+          # https://www.zaproxy.org/docs/desktop/start/features/authentication/
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
-          name: report-${{ matrix.rootUrl }}
+          name: report-${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
