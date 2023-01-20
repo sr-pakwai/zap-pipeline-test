@@ -17,4 +17,9 @@ jobs:
           target: ${{ matrix.endpoint }}
           allow_issue_writing: false
           # https://www.zaproxy.org/docs/docker/baseline-scan/
-          cmd_options: '-d -a -w my_scan.md'
+          cmd_options: '-d'
+      - name: Archive results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pentest-report
+          path: /zap/wrk/
