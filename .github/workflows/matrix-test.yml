@@ -5,10 +5,12 @@ jobs:
   example_matrix:
     strategy:
       matrix:
-        endpoints:
-          - https://www.zaproxy.org
+        endpoint:
+          - 'https://www.zaproxy.org'
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
-          target: 'https://www.zaproxy.org'
+          target: ${{ matrix.endpoint }}
