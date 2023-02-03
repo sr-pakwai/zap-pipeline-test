@@ -29,10 +29,10 @@ jobs:
         with:
           name: zap_${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
-      - name: Upload to gdrive
-        uses: adityak74/google-drive-upload-git-action@main
+      - name: Upload folder to Google Drive
+        uses: Jodebu/upload-to-drive@master
         with:
+          target: ${{ github.workspace }}
+          name: zap_${{ matrix.urlTitle }}
           credentials: ${{ secrets.DRIVE_CREDENTIALS }}
-          filename: zap_${{ matrix.urlTitle }}
-          folderId: ${{ secrets.DRIVE_FOLDERID }}
-          overwrite: "true" # optional boolean
+          folder: ${{ secrets.DRIVE_FOLDERID }}
