@@ -29,10 +29,16 @@ jobs:
         with:
           name: zap_${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
-      - name: Upload folder to Google Drive
-        uses: Jodebu/upload-to-drive@master
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0'
         with:
-          target: ${{ github.workspace }}
-          name: zap_${{ matrix.urlTitle }}
-          credentials: ${{ secrets.DRIVE_CREDENTIALS }}
-          folder: ${{ secrets.DRIVE_FOLDERID }}
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+      - name: Send file
+        id: send
+        uses: hankei6km/gdrive-act-send@v0.5.1
+        with:
+          parent_id: ${{ secrets.DRIVE_FOLDERID }}
+          dest_file_name: zap_${{ github.event.repository.name }}_${{ matrix.urlTitle }}
+          src_file_name: zap_${{ matrix.urlTitle }}
