@@ -7,12 +7,12 @@ jobs:
       matrix:
         urlTitle:
           - Zaproxy
-          # - Google
+          - Google
         include:
           - urlTitle: Zaproxy
             endpoint: 'https://www.zaproxy.org'
-          # - urlTitle: Google
-          #   endpoint: 'https://www.google.com'
+          - urlTitle: Google
+            endpoint: 'https://www.google.com'
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
