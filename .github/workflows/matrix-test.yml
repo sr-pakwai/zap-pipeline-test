@@ -19,12 +19,12 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-      # - id: 'auth'
-      #   name: 'Authenticate to Google Cloud'
-      #   uses: 'google-github-actions/auth@v1'
-      #   with:
-      #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-      #     service_account: ${{ secrets.SERVICE_ACCOUNT }}
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
       - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
         uses: zaproxy/action-baseline@master
         # https://www.zaproxy.org/docs/desktop/start/features/authentication/
@@ -34,19 +34,19 @@ jobs:
           allow_issue_writing: false
           # https://www.zaproxy.org/docs/docker/baseline-scan/
           cmd_options: ''
+      - name: List output files
+        run: |
+          cd ${{ github.workspace }}
+          ls
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
           name: zap_${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
-      - name: Check directory
-        run: |
-          cd ${{ github.workspace }}
-          ls
-      # - name: Send file
-      #   id: send
-      #   uses: hankei6km/gdrive-act-send@v0.5.1
-      #   with:
-      #     parent_id: ${{ secrets.DRIVE_FOLDERID }}
-      #     dest_file_name: zap_${{ github.event.repository.name }}_${{ matrix.urlTitle }}
-      #     src_file_name: zap_${{ matrix.urlTitle }}
+      - name: Send file
+        id: send
+        uses: hankei6km/gdrive-act-send@v0.5.1
+        with:
+          parent_id: ${{ secrets.DRIVE_FOLDERID }}
+          dest_file_name: zap_${{ github.event.repository.name }}_${{ matrix.urlTitle }}.html
+          src_file_name: report_html.html
