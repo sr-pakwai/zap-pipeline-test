@@ -7,24 +7,24 @@ jobs:
       matrix:
         urlTitle:
           - Zaproxy
-          - Google
+          # - Google
         include:
           - urlTitle: Zaproxy
             endpoint: 'https://www.zaproxy.org'
-          - urlTitle: Google
-            endpoint: 'https://www.google.com'
+          # - urlTitle: Google
+          #   endpoint: 'https://www.google.com'
     runs-on: ubuntu-latest
     # Add "id-token" with the intended permissions.
     permissions:
       contents: 'read'
       id-token: 'write'
     steps:
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+      # - id: 'auth'
+      #   name: 'Authenticate to Google Cloud'
+      #   uses: 'google-github-actions/auth@v1'
+      #   with:
+      #     workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+      #     service_account: ${{ secrets.SERVICE_ACCOUNT }}
       - name: ZAP Baseline Scan - (${{ matrix.urlTitle }})
         uses: zaproxy/action-baseline@master
         # https://www.zaproxy.org/docs/desktop/start/features/authentication/
@@ -39,10 +39,14 @@ jobs:
         with:
           name: zap_${{ matrix.urlTitle }}
           path: ${{ github.workspace }}
-      - name: Send file
-        id: send
-        uses: hankei6km/gdrive-act-send@v0.5.1
-        with:
-          parent_id: ${{ secrets.DRIVE_FOLDERID }}
-          dest_file_name: zap_${{ github.event.repository.name }}_${{ matrix.urlTitle }}
-          src_file_name: zap_${{ matrix.urlTitle }}
+      - name: Check directory
+        run: |
+          cd ${{ github.workspace }}
+          ls
+      # - name: Send file
+      #   id: send
+      #   uses: hankei6km/gdrive-act-send@v0.5.1
+      #   with:
+      #     parent_id: ${{ secrets.DRIVE_FOLDERID }}
+      #     dest_file_name: zap_${{ github.event.repository.name }}_${{ matrix.urlTitle }}
+      #     src_file_name: zap_${{ matrix.urlTitle }}
