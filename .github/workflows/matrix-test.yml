@@ -7,7 +7,7 @@ jobs:
       matrix:
         urlTitle:
           - Zaproxy
-          - Google
+          # - Google
         include:
           - urlTitle: Zaproxy
             endpoint: 'https://www.zaproxy.org'
