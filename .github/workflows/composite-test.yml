@@ -8,6 +8,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: 'Authenticate to Google Cloud'
+      id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
     - name: ZAP Scan
       # uses: sr-pakwai/zap-pipeline-test/zap-composite@master
       uses: ./zap-composite

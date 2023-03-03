@@ -26,12 +26,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: 'Authenticate to Google Cloud'
-      id: 'auth'
-      uses: 'google-github-actions/auth@v1'
-      with:
-        workload_identity_provider: ${{ inputs.gcp-wi-provider }}
-        service_account: ${{ inputs.gcp-service-account }}
     - name: ZAP Baseline Scan - (${{ inputs.app-shortname }})
       uses: zaproxy/action-baseline@master
       # https://www.zaproxy.org/docs/desktop/start/features/authentication/
