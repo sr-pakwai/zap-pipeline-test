@@ -1,0 +1,54 @@
+name: Run Zaproxy DAST scan
+author: pakwai
+description: Runs the Zaproxy DAST scan and upload report to centralize storage.
+inputs:
+  github-token:
+    description: GitHub workflow token
+    required: true
+  app-shortname:
+    description: App shortname without space
+    required: true
+  target-endpoint:
+    description: Endpoint to run the DAST
+    required: true
+  gcp-service-account:
+    description: Email address or unique identifier of the Google Cloud service account.
+    required: true
+  gcp-wi-provider:
+    description: The full identifier of the Workload Identity Provider. eg. projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+    required: true
+  gdrive-folder-id:
+    description: The ID of the Google Drive folder you want to upload to
+    required: true
+  allow-issue-writing:
+    description: By default the action will file the report to the GitHub issue. Set this to false if you don't want the issue to be created or updated.
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: ZAP Baseline Scan - (${{ inputs.app-shortname }})
+      uses: zaproxy/action-baseline@master
+      # https://www.zaproxy.org/docs/desktop/start/features/authentication/
+      with:
+        token: ${{ inputs.github-token }}
+        target: ${{ inputs.target-endpoint }}
+        allow_issue_writing: ${{ inputs.allow-issue-writing}}
+        # https://www.zaproxy.org/docs/docker/baseline-scan/
+        cmd_options: ''
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: 'Authenticate to Google Cloud'
+      id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: ${{ inputs.gcp-wi-provider }}
+        service_account: ${{ inputs.gcp-service-account }}
+    - name: Send file to Drive
+      id: send
+      uses: hankei6km/gdrive-act-send@v0.5.1
+      with:
+        parent_id: ${{ inputs.gdrive-folder-id }}
+        dest_mime_type: text/html
+        dest_file_name: ${{ steps.date.outputs.date }}_zap_${{ inputs.app-shortname }}.html
+        src_file_name: report_html.html
