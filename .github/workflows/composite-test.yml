@@ -9,8 +9,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: ZAP Scan
-      uses: sr-pakwai/zap-pipeline-test/zap-composite@master
-      # uses: ./zap-composite
+      # uses: sr-pakwai/zap-pipeline-test/zap-composite@master
+      uses: ./zap-composite
       id: composite-scan
       with:
         # GitHub workflow token (do not change the value)
