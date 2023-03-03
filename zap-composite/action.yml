@@ -25,6 +25,10 @@ inputs:
     required: false
 runs:
   using: "composite"
+  # Add "id-token" with the intended permissions.
+  permissions:
+    contents: 'read'
+    id-token: 'write'
   steps:
     - name: ZAP Baseline Scan - (${{ inputs.app-shortname }})
       uses: zaproxy/action-baseline@master
@@ -39,6 +43,12 @@ runs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       shell: bash
+    - name: 'Authenticate to Google Cloud'
+      id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: ${{ inputs.gcp-wi-provider }}
+        service_account: ${{ inputs.gcp-service-account }}
     - name: Send file to Drive
       id: send
       uses: hankei6km/gdrive-act-send@v0.5.1
