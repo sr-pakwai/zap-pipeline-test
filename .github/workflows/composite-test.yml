@@ -1,4 +1,4 @@
-name: Owasp Zap
+name: Composite test
 on: workflow_dispatch
 
 jobs:
