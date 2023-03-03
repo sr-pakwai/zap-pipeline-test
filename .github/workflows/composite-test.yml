@@ -1,21 +1,27 @@
 name: Composite test
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
-  test:
-    name: Run Zaproxy Scan
-    uses: ./zap-composite@master
-    with:
-      # GitHub workflow token (do not change the value)
-      # For the scan to get the PR information
-      github-token: ${{ secrets.GITHUB_TOKEN }}
-      # App shortname without space
-      app-shortname: Zaproxy
-      # Endpoint to run the DAST (include https:// prefix)
-      target-endpoint: https://www.zaproxy.org
-      # Email address or unique identifier of the Google Cloud service account.
-      gcp-service-account: ${{ secrets.SERVICE_ACCOUNT }}
-      # The full identifier of the Workload Identity Provider.
-      gcp-wi-provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-      # Google drive folder to upload report to
-      gdrive-folder-id: ${{ secrets.DRIVE_FOLDERID }}
+  check-run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: ZAP Scan
+      uses: ./zap-composite
+      id: composite-scan
+      with:
+        # GitHub workflow token (do not change the value)
+        # For the scan to get the PR information
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        # App shortname without space
+        app-shortname: Zaproxy
+        # Endpoint to run the DAST (include https:// prefix)
+        target-endpoint: https://www.zaproxy.org
+        # Email address or unique identifier of the Google Cloud service account.
+        gcp-service-account: ${{ secrets.SERVICE_ACCOUNT }}
+        # The full identifier of the Workload Identity Provider.
+        gcp-wi-provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+        # Google drive folder to upload report to
+        gdrive-folder-id: ${{ secrets.DRIVE_FOLDERID }}
