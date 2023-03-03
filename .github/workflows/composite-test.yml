@@ -1,0 +1,21 @@
+name: Owasp Zap
+on: workflow_dispatch
+
+jobs:
+  test:
+    name: Run Zaproxy Scan
+    uses: actions/zap-composite@master
+    with:
+      # GitHub workflow token (do not change the value)
+      # For the scan to get the PR information
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      # App shortname without space
+      app-shortname: Zaproxy
+      # Endpoint to run the DAST (include https:// prefix)
+      target-endpoint: https://www.zaproxy.org
+      # Email address or unique identifier of the Google Cloud service account.
+      gcp-service-account: ${{ secrets.SERVICE_ACCOUNT }}
+      # The full identifier of the Workload Identity Provider.
+      gcp-wi-provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+      # Google drive folder to upload report to
+      gdrive-folder-id: ${{ secrets.DRIVE_FOLDERID }}

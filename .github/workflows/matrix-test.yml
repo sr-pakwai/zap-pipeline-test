@@ -1,4 +1,4 @@
-name: Centralize Zap Scan
+name: Matrix test
 on: workflow_dispatch
 # The trigger to which the workflow will run 
 jobs:
