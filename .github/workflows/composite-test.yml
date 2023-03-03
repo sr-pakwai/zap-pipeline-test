@@ -4,7 +4,7 @@ on: workflow_dispatch
 jobs:
   test:
     name: Run Zaproxy Scan
-    uses: actions/zap-composite@master
+    uses: ./zap-composite
     with:
       # GitHub workflow token (do not change the value)
       # For the scan to get the PR information
