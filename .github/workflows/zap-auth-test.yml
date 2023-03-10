@@ -1,5 +1,5 @@
 name: Generate DAST Scan Report
-on: push
+on: workflow_dispatch
 
 jobs:
   check-run:
