@@ -27,7 +27,7 @@ jobs:
         gcp-wi-provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
         # Google drive folder to upload report to
         gdrive-folder-id: ${{ secrets.DRIVE_FOLDERID }}
-        # (OPTIONAL) Username for the Zap Authenticated Header
-        auth-username: ${{ secrets.ZAP_AUTH_USERNAME }}
-        # (OPTIONAL) Password for the Zap Authenticated Header
-        auth-password: ${{ secrets.ZAP_AUTH_PASSWORD }}
+        # # (OPTIONAL) Username for the Zap Authenticated Header
+        # auth-username: ${{ secrets.ZAP_AUTH_USERNAME }}
+        # # (OPTIONAL) Password for the Zap Authenticated Header
+        # auth-password: ${{ secrets.ZAP_AUTH_PASSWORD }}
