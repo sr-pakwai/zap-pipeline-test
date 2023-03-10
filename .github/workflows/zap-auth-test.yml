@@ -1,0 +1,31 @@
+name: Generate DAST Scan Report
+on: push
+
+jobs:
+  check-run:
+    runs-on: ubuntu-latest
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+    - name: ZAP Scan
+      uses: servicerocket/actions/common/zaproxy-scan@master
+      with:
+        # GitHub workflow token (do not change the value)
+        # For the scan to get the PR information
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        # App shortname without space
+        app-shortname: MyJira-ProjectPage
+        # Endpoint to run the DAST (include https:// prefix)
+        target-endpoint: https://pakwai-dev1.atlassian.net/jira/projects
+        # Email address or unique identifier of the Google Cloud service account.
+        gcp-service-account: ${{ secrets.SERVICE_ACCOUNT }}
+        # The full identifier of the Workload Identity Provider.
+        gcp-wi-provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+        # Google drive folder to upload report to
+        gdrive-folder-id: ${{ secrets.DRIVE_FOLDERID }}
+        # (OPTIONAL) Username for the Zap Authenticated Header
+        auth-username: ${{ secrets.ZAP_AUTH_USERNAME }}
+        # (OPTIONAL) Password for the Zap Authenticated Header
+        auth-password: ${{ secrets.ZAP_AUTH_PASSWORD }}
