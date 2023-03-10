@@ -44,15 +44,15 @@ runs:
     - name: Generate Base64 Auth Header
       if: ${{ inputs.auth-username != 0 }}
       run: |
-        Base64Auth=$(echo "${{ inputs.auth-username }}:${{ inputs.auth-password }}" | base64)
-        echo "Base64Auth=$Base64Auth" >> $GITHUB_ENV
+        TempEncoded=$(echo -n "${{ inputs.auth-username }}:${{ inputs.auth-password }}" | base64)
+        echo "Base64Encoded=$TempEncoded" >> $GITHUB_ENV
       shell: bash
     - name: ZAP Baseline Scan With Auth - (${{ inputs.app-shortname }})
       if: ${{ inputs.auth-username != 0 }}
       uses: zaproxy/action-baseline@master
       # https://www.zaproxy.org/docs/desktop/start/features/authentication/
       env:
-        ZAP_AUTH_HEADER_VALUE: 'Basic ${{ env.Base64Auth }}'
+        ZAP_AUTH_HEADER_VALUE: 'Basic ${{ env.Base64Encoded }}'
       with:
         token: ${{ inputs.github-token }}
         target: ${{ inputs.target-endpoint }}
