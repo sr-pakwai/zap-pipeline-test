@@ -13,3 +13,5 @@ jobs:
       id: composite-scan
       env:
         MY_VALUE: hihi
+      with:
+        with-value: ${{ env.MY_VALUE }}
