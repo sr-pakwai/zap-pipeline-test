@@ -44,8 +44,7 @@ runs:
     - name: Generate Base64 Auth Header
       if: ${{ inputs.auth-username != 0 }}
       run: |
-        TempEncoded=$(echo -n "${{ inputs.auth-username }}:${{ inputs.auth-password }}" | base64 | tr -d '[:space:]')
-        echo "Base64Encoded=$TempEncoded" >> $GITHUB_ENV
+        Base64Encoded=$(echo -n "${{ inputs.auth-username }}:${{ inputs.auth-password }}" | base64 | tr -d '[:space:]')
       shell: bash
     - name: ZAP Baseline Scan With Auth - (${{ inputs.app-shortname }})
       if: ${{ inputs.auth-username != 0 }}
