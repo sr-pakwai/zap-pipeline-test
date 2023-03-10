@@ -11,3 +11,5 @@ jobs:
       # uses: sr-pakwai/zap-pipeline-test/zap-composite@master
       uses: ./simple-composite
       id: composite-scan
+      env:
+        MY_VALUE: hihi

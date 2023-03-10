@@ -9,11 +9,11 @@ runs:
   steps:
     - name: With Value
       if: ${{ inputs.with-value != 0 }}
-      run: "shout=${{ inputs.with-value }}" >> $GITHUB_ENV
+      run: echo "shout=$MY_VALUE" >> $GITHUB_ENV
       shell: bash
     - name: With No Value
       if: ${{ inputs.with-value == 0 }}
-      run: "shout=No value" >> $GITHUB_ENV
+      run: echo "shout=No value" >> $GITHUB_ENV
       shell: bash
     - name: Convert base64
       run: echo "${{ env.shout }}" | base64
