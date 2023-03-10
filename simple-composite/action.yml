@@ -10,14 +10,13 @@ runs:
     - name: With Value
       if: ${{ inputs.with-value != 0 }}
       run: |
-        BASIC_AUTH=$(echo "$MY_VALUE:AAA" | base64)
-        echo "shout=$BASIC_AUTH" >> $GITHUB_ENV
+        BASIC_AUTH=$(echo "$MY_VALUE:AAA" | base64) >> $GITHUB_ENV
       shell: bash
     - name: With No Value
       if: ${{ inputs.with-value == 0 }}
       run: echo "shout=No value" >> $GITHUB_ENV
       shell: bash
     - name: Convert base64
-      run: echo "${{ env.shout }}"
+      run: echo "Not intended to show ${{ env.BASIC_AUTH }}"
       shell: bash
 
