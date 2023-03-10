@@ -1,0 +1,15 @@
+name: Simple Shared Action
+author: pakwai
+inputs:
+  with-value:
+    description: GitHub workflow token
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - name: With Value
+      if: ${{ inputs.with-value != 0 }}
+      run: echo ${{ inputs.with-value }}
+    - name: With No Value
+      if: ${{ inputs.with-value == 0 }}
+      run: echo "No value"

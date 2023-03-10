@@ -1,0 +1,15 @@
+name: Netlify Deploy
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: ZAP Scan
+      # uses: sr-pakwai/zap-pipeline-test/zap-composite@master
+      uses: ./simple-composite
+      id: composite-scan
+      with:
+        with-value: 'hihi'
