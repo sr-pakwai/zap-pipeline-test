@@ -10,7 +10,7 @@ jobs:
       id-token: 'write'
     steps:
     - name: ZAP Scan
-      uses: servicerocket/actions/common/zaproxy-scan@master
+      uses: ./zap-composite
       with:
         # GitHub workflow token (do not change the value)
         # For the scan to get the PR information
