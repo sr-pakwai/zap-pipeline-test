@@ -1,4 +1,4 @@
-name: Generate DAST Scan Report
+name: DAST Auth
 on: workflow_dispatch
 
 jobs:
