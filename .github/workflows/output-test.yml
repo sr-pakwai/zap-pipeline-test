@@ -11,3 +11,5 @@ jobs:
       - name: Test Output
         id: test
         run: echo ${{ steps.date.outputs.date }}
+        shell: bash
+
